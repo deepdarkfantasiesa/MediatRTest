@@ -83,6 +83,7 @@ namespace MediatRTest.Controllers
             //}
             //Task.Delay(1000).Wait();
             await _mediator.Publish(new CommonCommand());
+            await _mediator.Publish(new TestCommand());
             //await _mediator.Publish(new CommonCommand());
             //await _mediator.Send(new MyRequestCommand());
         }
