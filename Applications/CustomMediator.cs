@@ -10,11 +10,9 @@ namespace MediatRTest.Applications
         private readonly ILogger<CustomMediator> _logger;
         private readonly MyContext _context;
         private readonly ConcurrentBag<Exception> _exceptions;
-        private readonly CustomExceptions _customExceptions;
 
-        public CustomMediator(CustomExceptions customExceptions,ConcurrentBag<Exception> exceptions,ILogger<CustomMediator> logger,IServiceProvider serviceFactory,MyContext myContext) : base(serviceFactory)
+        public CustomMediator(ConcurrentBag<Exception> exceptions,ILogger<CustomMediator> logger,IServiceProvider serviceFactory,MyContext myContext) : base(serviceFactory)
         {
-            _customExceptions = customExceptions;
             _exceptions = exceptions;
             _logger = logger;
             _context = myContext;
@@ -27,21 +25,11 @@ namespace MediatRTest.Applications
         {
             try
             {
-                //await _context.BeginTransactionAsyncTest();
-                //Console.WriteLine($"Before all handlers execution {_context._currentTransaction.TransactionId}  {DateTime.Now}");
-                //await base.PublishCore(handlerExecutors, notification, cancellationToken);
-                //await _context.SaveChangesAsync();
-                //Console.WriteLine($"After all handlers execution {_context._currentTransaction.TransactionId}  {DateTime.Now}");
-                //await _context.CommitTransactionAsyncTest();
-
-
                 await _context.BeginTransactionAsyncTest();
                 Console.WriteLine($"Before all handlers execution {_context._currentTransaction.TransactionId}  {DateTime.Now}");
 
                 INotification notification2 = notification;
                 await Task.WhenAll(handlerExecutors.Select((NotificationHandlerExecutor handler) => handler.HandlerCallback(notification2, cancellationToken)).ToArray());
-
-                _customExceptions.Exceptions.Clear();
 
                 if (!_exceptions.IsEmpty)
                 {
@@ -59,7 +47,7 @@ namespace MediatRTest.Applications
             }
             catch (Exception ex)
             {
-              
+
             }
         }
 

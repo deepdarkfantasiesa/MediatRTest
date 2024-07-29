@@ -77,15 +77,8 @@ namespace MediatRTest.Controllers
         [HttpGet("test")]
         public async Task Test()
         {
-            //for (int i = 0; i < 1000; i++)
-            //{
-            //    await _mediator.Publish(new CommonCommand());
-            //}
-            //Task.Delay(1000).Wait();
             await _mediator.Publish(new CommonCommand());
-            await _mediator.Publish(new TestCommand());
-            //await _mediator.Publish(new CommonCommand());
-            //await _mediator.Send(new MyRequestCommand());
+            //await _mediator.Publish(new TestCommand());
         }
     }
 }

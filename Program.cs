@@ -46,12 +46,7 @@ namespace MediatRTest
                 options.UseMySql(builder.Configuration["ConnectionString"], ServerVersion.AutoDetect(builder.Configuration["ConnectionString"]));
             });
 
-            //builder.Services.AddDbContext<MyContext>(options =>
-            //    options.UseMySql(builder.Configuration["ConnectionString"], ServerVersion.AutoDetect(builder.Configuration["ConnectionString"])),
-            //    ServiceLifetime.Singleton);
-
             builder.Services.TryAddScoped(_ => new ConcurrentBag<Exception>());
-            builder.Services.TryAddScoped(_ => new CustomExceptions());
 
             var app = builder.Build();
 
